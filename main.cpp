@@ -17,21 +17,27 @@ void task1(){
     std::vector<int> a;
     enterVector(a);
 
-    int start = 0, end = 0;
-    int sum = a[0], sumCur;
+    int start = 0, end = 0, curStart = 0, curEnd = 0;
+    int minSum = 0, curSum = 0, sum = 0, maxSum = a[0];
     for (int i = 0; i < a.size(); ++i){
-        sumCur = a[i];
-        for (int j = i + 1; j < a.size(); ++j){
-            sumCur += a[j];
-            if (sumCur > sum){
-                sum = sumCur;
-                start = i;
-                end = j;
-            }
+        sum += a[i];
+
+        curSum = sum - minSum;
+
+        if (curSum > maxSum){
+            // update start, stop and sum
+            start = curStart + 1;
+            end = i;
+            maxSum = curSum;
+        }
+        if (sum < minSum){
+            // update minSum, curStart, curEnd
+            minSum = sum;
+            curStart = i;
         }
     }
 
-    std::cout << "start: " << start << " end: " << end  << " sum: " << sum << std::endl;
+    std::cout << "start: " << start << " end: " << end  << " sum: " << maxSum << std::endl;
 }
 
 void task2(){
