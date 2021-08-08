@@ -117,7 +117,7 @@ void task4(){
 //    std::vector<int> vec = {-100,-50, -5, 1, 10, 15};
     std::vector<int> vec;
     enterVector(vec);
-    int numNegative=0;
+    int numNegative=0, counterPos = 0, counterNeg = 0, pos = 0, neg = 0;
     // find number of negative elements
     for (int x : vec){
         if(x < 0){
@@ -127,19 +127,20 @@ void task4(){
             break;
         }
     }
-    // iterate over them
-    for (int i = numNegative - 1; i >= 0; i--){
-        // swap numbers for which negative number abs is larger than positive number
-        for (int j = i + 1; j < vec.size(); j++){
-            if (-vec[j - 1] > vec[j]){
-                // do the swap
-                swapValVector(vec, j - 1, j);
-            }
+    // make steps in opposite direction and output the minimal absolute value
+    while(counterNeg < numNegative || counterPos < vec.size() - numNegative){
+        pos = numNegative + counterPos >= vec.size() ? INT_MAX : vec[numNegative + counterPos];
+        neg = numNegative - counterNeg - 1 < 0 ? INT_MIN : vec[numNegative - counterNeg - 1];
+        if(-neg < pos){
+            std::cout << neg << ", ";
+            counterNeg++;
+        }
+        else{
+            std::cout << pos << ", ";
+            counterPos++;
         }
     }
-    for(int x : vec){
-        std::cout << x << ", ";
-    }
+    std::cout << std::endl;
 }
 
 int main() {
